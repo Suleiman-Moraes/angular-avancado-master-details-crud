@@ -20,7 +20,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
 
     constructor(
         protected injector: Injector,
-        public resource T,
+        public resource: T,
         protected resourceService: BaseResourceService<T>,
         protected jsonDataToResourceFn: (jsonData: any) => T
     ) {
@@ -67,7 +67,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
                 .subscribe(
                     (resource) => {
                         this.resource = resource;
-                        this.resourceForm.patchValue(resource) //binds loaded category data to ResourceForm
+                        this.resourceForm.patchValue(resource) //binds loaded resource data to ResourceForm
                     },
                     (error) => alert('Ocorreu um erro, tente mais tarde.')
                 )
@@ -116,8 +116,8 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
         const baseComponentPath: string = this.route.snapshot.parent.url[0].path;
 
         //redirect/reload component page
-        this.router.navigateByUrl("baseComponentPath", { skipLocationChange: true }).then(
-            () => this.router.navigate(["baseComponentPath", resource.id, "edit"])
+        this.router.navigateByUrl(baseComponentPath, { skipLocationChange: true }).then(
+            () => this.router.navigate([baseComponentPath, resource.id, "edit"])
         )
     }
 
